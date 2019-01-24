@@ -1,0 +1,28 @@
+body {
+	width: 1000px;
+	border: 1px solid;    
+	margin: 10px;
+	padding: 10px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    background-color: #e0e0ff;
+}
+
+table {
+	width: 100%;
+	padding-bottom: 5px;
+}
+
+th {
+	border: 1px solid;
+	padding: 5px;
+}
+
+tr.odd {
+	background-color: #b2edff;
+}
+
+tr.even {
+	background-color: #8fe3ff;
+}
+

@@ -1,0 +1,31 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence 
+        http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+	version="1.0">
+
+	<persistence-unit name="OnlineFerries">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+	
+		<class>de.onlineferries.entity.Customer</class>
+		<class>de.onlineferries.entity.Route</class>
+		<class>de.onlineferries.entity.Trip</class>
+		<class>de.onlineferries.entity.Ship</class>
+		<class>de.onlineferries.entity.Cabin</class>
+		<class>de.onlineferries.entity.ShipCabin</class>
+		
+		<properties>
+			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+			<property name="hibernate.connection.url" value="jdbc:mysql://localhost/onlineferries"/>
+			<property name="hibernate.connection.username" value="root"/>
+			<property name="hibernate.connection.password" value="root"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+
+	        <!-- Echo all executed SQL to stdout -->
+			<property name="hibernate.show_sql" value="true"/>
+					
+		</properties>
+
+	</persistence-unit>	
+ 
+</persistence>

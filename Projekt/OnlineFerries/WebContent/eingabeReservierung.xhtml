@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:c="http://java.sun.com/jsp/jstl/core">
+		
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>#{msg.onlineferries_res1_listtitle}</title>
+</h:head>
+
+<body>
+
+	<f:view locale="#{localeHandler.locale}">
+		<h:outputStylesheet library="css" name="style.css"/>
+
+		<div align="center"><h1>#{msg.onlineferries_welcome_message}</h1></div>
+		<hr/><br/>
+		<div align="center"><h:graphicImage library="images" name="schiff.GIF"/></div>
+		<br/><hr/><br/>
+		
+		<h:panelGrid columns="3">
+			<h:outputFormat value="#{msg.onlineferries_trip_currentroute}">
+				<f:param value="#{routeHandler.route.start}"/>
+				<f:param value="#{routeHandler.route.destination}"/>	
+			</h:outputFormat>
+			<h:outputFormat value="#{msg.onlineferries_res1_currenttrip}">
+				<f:param value="#{tripHandler.trip.formatDate}"/>
+				<f:param value="#{tripHandler.trip.formatDeparture}"/>
+				<f:param value="#{tripHandler.trip.formatArrival}"/>
+			</h:outputFormat>
+			<h:outputFormat value="#{msg.onlineferries_res1_currentship}">
+				<f:param value="#{routeHandler.ship.description}"/>
+			</h:outputFormat>
+		</h:panelGrid>
+
+		<br/><hr/><br/>
+				
+		<h:form>
+
+			<h:panelGrid columns="1">
+			
+				<h:dataTable value = "#{reservationHandler.shipCabins}" var="shipcabin">
+					<f:facet name="Header">#{msg.onlineferries_res1_lblSelectCabin}</f:facet>
+					<h:column>
+						<f:facet name="header">#{msg.onlineferries_res1_lblCabintype}</f:facet>
+						#{shipcabin.cabinDescr}
+					</h:column>
+					<h:column>
+						<f:facet name="header">#{msg.onlineferries_res1_lblPrice}</f:facet>
+						#{shipcabin.price}
+					</h:column>
+					<h:column>
+						<f:facet name="header">#{msg.onlineferries_res1_lblCount}</f:facet>
+						<h:inputText value="#{shipcabin.res_count}"/>
+					</h:column>
+				</h:dataTable>
+
+				<hr/><br/>
+						
+				<h:panelGrid columns = "3">
+					<h:outputLabel value = ""/><h:outputLabel value = "#{msg.onlineferries_res1_lblPrice}"/><h:outputLabel value = "#{msg.onlineferries_res1_lblCount}"/>
+	
+					<h:outputLabel value = "#{msg.onlineferries_res1_lblCars}"/>
+					<h:outputLabel id = "carPrice" value = "#{tripHandler.trip.carPrice}">
+						<f:convertNumber type="currency" currencySymbol = "EUR"/>
+					</h:outputLabel>
+					<h:inputText id="cars" value="#{reservationHandler.cars}" required ="true" />
+
+					<h:outputLabel value = "#{msg.onlineferries_res1_lblTravellers}"/>	
+					<h:outputLabel id = "passengerPrice" value = "#{tripHandler.trip.passengerPrice}">
+						<f:convertNumber type="currency" currencySymbol = "EUR"/>
+					</h:outputLabel>
+					<h:selectOneListbox id="travellers" value="#{reservationHandler.travellers}" size="1"
+						onchange="this.form.submit()" immediate="true" valueChangeListener = "#{reservationHandler.changeTraveller}">
+						<f:selectItems value="#{reservationHandler.travellerValues}"/>
+					</h:selectOneListbox>						
+				</h:panelGrid>
+
+				<hr/><br/>
+
+				<h:dataTable value="#{reservationHandler.travellerNames}" var="traveller">
+					<h:column>
+						<f:facet name="header">#{msg.onlineferries_res1_lblLastName}</f:facet>
+						<h:inputText value = "#{traveller.name}" id="traveller"
+							required = "true" requiredMessage="#{msg.onlineferries_res1_errorLastName}"
+						 	validator="#{reservationHandler.validateTravellerName}"/>	
+						 <h:message showDetail="true" for = "traveller"/>						
+					</h:column>
+				</h:dataTable>				
+
+			</h:panelGrid>
+						
+			<h:panelGrid columns = "1">
+				<h:commandButton action="#{reservationHandler.selectCustomerType}" value="#{msg.onlineferries_res1_submit}"/>	
+				<h:commandLink action="#{reservationHandler.back}" value="#{msg.onlineferries_res1_back}" immediate = "true"/>				
+			</h:panelGrid>			
+		
+		</h:form>
+		
+	</f:view>
+	
+</body>
+
+</html>

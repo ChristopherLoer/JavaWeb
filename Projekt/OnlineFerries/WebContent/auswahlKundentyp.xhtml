@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:c="http://java.sun.com/jsp/jstl/core">
+		
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>#{msg.onlineferries_res1_listtitle}</title>
+</h:head>
+
+<body>
+
+	<f:view locale="#{localeHandler.locale}">
+		<h:outputStylesheet library="css" name="style.css"/>
+
+		<div align="center"><h1>#{msg.onlineferries_welcome_message}</h1></div>
+		<hr/><br/>
+		<div align="center"><h:graphicImage library="images" name="schiff.GIF"/></div>
+		<br/><hr/><br/>
+		
+		<h:panelGrid columns="3">
+			<h:outputFormat value="#{msg.onlineferries_trip_currentroute}">
+				<f:param value="#{routeHandler.route.start}"/>
+				<f:param value="#{routeHandler.route.destination}"/>	
+			</h:outputFormat>
+			<h:outputFormat value="#{msg.onlineferries_res1_currenttrip}">
+				<f:param value="#{tripHandler.trip.formatDate}"/>
+				<f:param value="#{tripHandler.trip.formatDeparture}"/>
+				<f:param value="#{tripHandler.trip.formatArrival}"/>
+			</h:outputFormat>
+			<h:outputFormat value="#{msg.onlineferries_res1_currentship}">
+				<f:param value="#{routeHandler.ship.description}"/>
+			</h:outputFormat>
+		</h:panelGrid>
+		
+	</f:view>
+
+	<hr/><br/>
+		
+	<h3><h:outputFormat value="#{msg.onlineferries_sel_title}">
+			<f:param value="#{reservationHandler.reservationPrice}"/>
+	    </h:outputFormat>
+	</h3>	
+
+	<h:panelGrid columns="2">
+		<h:outputText value="#{msg.onlineferries_res1_lblCars}"/>
+		<h:outputText value="#{reservationHandler.cars}"/>	
+	</h:panelGrid>	
+
+	<h:dataTable value="#{reservationHandler.selectedShipCabins}" var="shipCabin">
+		<h:column>
+			<f:facet name="header">#{msg.onlineferries_sel_lblCabin}</f:facet>
+			#{shipCabin.cabinDescr}
+		</h:column>
+		<h:column>
+			<f:facet name="header">#{msg.onlineferries_res1_lblCount}</f:facet>
+			#{shipCabin.res_count}
+		</h:column>
+	</h:dataTable>
+	
+	<h:dataTable value="#{reservationHandler.travellerNames}" var="traveller">
+		<h:column>
+			<f:facet name="header">#{msg.onlineferries_res1_lblTravellers}</f:facet>
+			#{traveller.name}
+		</h:column>
+	</h:dataTable>
+
+	<hr/><br/>
+
+	<h:panelGrid columns="3">
+		<h:form>
+			<h:outputText value="#{msg.onlineferries_sel_lbl_next1}"/><h:outputText value = "  "/>
+			<h:commandButton action="#{reservationHandler.registration}" value="#{msg.onlineferries_sel_next1}"/>			
+		</h:form>
+		<h:form>
+			<h:outputText value="#{msg.onlineferries_sel_lbl_next2}"/><h:outputText value = "  "/>
+			<h:button outcome="login.xhtml" value="#{msg.onlineferries_sel_next2}"/>				
+		</h:form>
+		<h:form>
+			<h:commandLink value="#{msg.onlineferries_sel_back}" immediate = "true" action = "#{reservationHandler.back}"/>	
+		</h:form>
+	</h:panelGrid>
+
+</body>
+
+</html>

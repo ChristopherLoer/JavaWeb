@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core">
+		
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>#{msg.onlineferries_index_title1}</title>
+</h:head>
+
+<body>
+
+<f:view>
+	<h:outputStylesheet library="css" name="style.css"/>
+		
+	<div align="center"><h1>#{msg.onlineferries_welcome_message}</h1></div>
+	
+	<hr/><br/>
+	
+	<div align="center"><h:graphicImage library="images" name="schiff.GIF"/></div>
+	
+	<br/><hr/><br/>
+
+	<div align="center">
+	<h:panelGrid colums="2" cellpadding="10">
+		<h:form>
+			<h:commandLink action="#{localeHandler.changeLocale}">
+				<h:graphicImage library="images" name="FLGGERM.GIF"/>
+				<f:param name="locale" value="de"/>
+			</h:commandLink>
+			<h:commandLink action="#{localeHandler.changeLocale}">
+				<h:graphicImage library="images" name="FLGUK.GIF"/>
+				<f:param name="locale" value="en"/>
+			</h:commandLink>	
+		</h:form>
+	</h:panelGrid>		
+	</div>
+				
+	<div align="center">
+			<h1>#{msg.onlineferries_index_title2}</h1>
+	</div>
+
+	<p style="text-align:center;">
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:commandButton action="#{routeHandler.routes}" value="#{msg.onlineferries_index_submit2}"/>	
+				<h:button outcome="login.xhtml" value="#{msg.onlineferries_index_submit1}"/>			
+			</h:panelGrid>
+		</h:form>
+	</p>
+	<div align="center"><h:messages showDetail="true" showSummary="false" styleClass="message"/></div>	
+				
+</f:view>
+			
+</body>
+
+</html>

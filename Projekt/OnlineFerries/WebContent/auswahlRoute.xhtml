@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core">
+		
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>#{msg.onlineferries_route_listtitle}</title>
+</h:head>
+
+<body>
+
+	<f:view locale="#{localeHandler.locale}">
+		<h:outputStylesheet library="css" name="style.css"/>
+
+		<div align="center"><h1>#{msg.onlineferries_welcome_message}</h1></div>
+		<hr/><br/>
+		<div align="center"><h:graphicImage library="images" name="schiff.GIF"/></div>
+		<br/><hr/><br/>
+		
+		<h:form>
+			<h:panelGrid columns="1">
+				<f:facet name="header">#{msg.onlineferries_route_listtitle}</f:facet>
+				<h:selectOneListbox valueChangeListener="#{routeHandler.routeChanged}" 
+						value="#{routeHandler.route}" converter="#{routeHandler.routeConverter}">
+					<f:selectItems 
+						value="#{routeHandler.routes}" 
+						var="route" 
+						itemValue="#{route}"
+						itemLabel="#{route.start} - #{route.destination}"/>
+				</h:selectOneListbox>
+			
+				<h:commandButton action="#{tripHandler.trips}" value="#{msg.onlineferries_route_submit}"/>	
+			</h:panelGrid>
+
+			<h:commandLink value="#{msg.onlineferries_route_back}" immediate = "true" action = "#{routeHandler.back}"/>
+			
+		</h:form>
+			
+	</f:view>
+
+</body>
+
+</html>

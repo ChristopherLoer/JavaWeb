@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core">
+		
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>#{msg.onlineferries_trip_listtitle}</title>
+</h:head>
+
+<body>
+
+	<f:view locale="#{localeHandler.locale}">
+		<h:outputStylesheet library="css" name="style.css"/>
+
+		<div align="center"><h1>#{msg.onlineferries_welcome_message}</h1></div>
+		<hr/><br/>
+		<div align="center"><h:graphicImage library="images" name="schiff.GIF"/></div>
+		<br/><hr/><br/>
+		
+		<h:outputFormat value="#{msg.onlineferries_trip_currentroute}">
+			<f:param value="#{routeHandler.route.start}"/>
+			<f:param value="#{routeHandler.route.destination}"/>	
+		</h:outputFormat>
+		
+		<h:form>
+			<h:panelGrid columns="1">
+				<f:facet name="header">#{msg.onlineferries_trip_listtitle}</f:facet>
+				<h:selectOneListbox value="#{tripHandler.trip}" converter="#{tripHandler.tripConverter}">
+					<f:selectItems 
+						value="#{tripHandler.trips}" 
+						var="trip" 
+						itemValue="#{trip}"
+						itemLabel="#{trip.tripLabel}"/>
+				</h:selectOneListbox>
+			
+				<h:commandButton action="#{reservationHandler.enterReservation}" value="#{msg.onlineferries_route_submit}"/>	
+			</h:panelGrid>
+
+			<h:commandLink value="#{msg.onlineferries_trip_back}" immediate = "true" action = "#{tripHandler.back}"/>
+			
+		</h:form>
+			
+	</f:view>
+
+</body>
+
+</html>

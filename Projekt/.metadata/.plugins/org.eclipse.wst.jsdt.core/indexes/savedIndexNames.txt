@@ -1,0 +1,6 @@
+INDEX VERSION 1.4+C:\Users\a642344\Duales Studium\FH\5. Semester\Java Web Programmierung\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+2261757720.index
+54894666.index
+1460358538.index
+3530228158.index
+3751115833.index
