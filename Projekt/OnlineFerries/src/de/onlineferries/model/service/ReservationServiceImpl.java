@@ -5,44 +5,108 @@ import java.util.HashSet;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import de.onlineferries.entity.Cabin;
 import de.onlineferries.entity.CabinReservation;
 import de.onlineferries.entity.Customer;
 import de.onlineferries.entity.Reservation;
+import de.onlineferries.entity.Route;
 import de.onlineferries.entity.Travellers;
 import de.onlineferries.entity.Trip;
 import de.onlineferries.view.CustomerView;
 import de.onlineferries.view.ReservationView;
+import de.onlineferries.view.RouteView;
 import de.onlineferries.view.ShipCabinView;
+import de.onlineferries.view.TravellerView;
+import de.onlineferries.view.TripView;
 
 public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public double getReservationPrice(int trip_id, List<ShipCabinView> shipCabins, int cars, int travellers) {
-		
+
 		double reservation_price = 0;
-		
+
 		EntityManager em = EntityManagerFactoryService.getEntityManagerFactory().createEntityManager();
 		try {
 
-			Trip trip = em.find(Trip.class,trip_id);
-			
+			Trip trip = em.find(Trip.class, trip_id);
+
 			reservation_price += cars * trip.getPrice_car();
-			reservation_price += (travellers+1) * trip.getPrice_passenger();
+			reservation_price += (travellers + 1) * trip.getPrice_passenger();
 			for (ShipCabinView shipCabin : shipCabins) {
 				if (shipCabin.getRes_count() > 0) {
 					reservation_price += shipCabin.getRes_count() * shipCabin.getPrice();
 				}
 			}
-		}
-		catch(Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
-		}
-		finally {
+		} finally {
 			em.close();
-		}		
+		}
 		return reservation_price;
+	}
+
+	@Override
+	public boolean isAvailable(int trip_id, List<ShipCabinView> shipCabins, int cars, int travellers) {
+
+		boolean isAvailable = true;
+
+		EntityManager em = EntityManagerFactoryService.getEntityManagerFactory().createEntityManager();
+		List<ReservationView> reservationV = null;
+		try {
+
+			Trip trip = em.find(Trip.class, trip_id);
+
+			TypedQuery<Reservation> query = em.createQuery("from de.onlineferries.entity.Reservation",
+					Reservation.class);
+			List<Reservation> reservations = query.getResultList();
+
+			TypedQuery<Travellers> query2 = em.createQuery("from de.onlineferries.entity.Travellers", Travellers.class);
+			List<Travellers> travellersList = query2.getResultList();
+
+			for (Travellers traveller : travellersList) {
+				if (traveller.getReservation().getTrip().getId() != trip_id) {
+					travellersList.remove(traveller);
+				}
+			}
+
+			for (Reservation reservation : reservations) {
+				if (reservation.getTrip().getId() != trip_id) {
+					reservations.remove(reservation);
+				}
+			}
+
+			int travellersOnShip = travellersList.size();
+			int carsOnShip = 0;
+			for (Reservation reservation : reservations) {
+				carsOnShip += reservation.getCars();
+			}
+
+			if (trip.getRoute().getShip().getPassengers() < travellersOnShip + travellers) {
+				return false;
+			}
+
+			if (trip.getRoute().getShip().getCars() < carsOnShip + cars) {
+				return false;
+			}
+
+			for (ShipCabinView shipCabin : shipCabins) {
+				if (shipCabin.getRes_count() > 0) {
+					int CabinsOnShip = 10;// TODO aus Reservierungen berechnen
+					if (trip.getRoute().getShip().getShipCabin() + cars < CabinsOnShip) {
+						return false;
+					}
+				}
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			em.close();
+		}
+		return true;
 	}
 
 	@Override
@@ -51,16 +115,15 @@ public class ReservationServiceImpl implements ReservationService {
 		EntityManager em = EntityManagerFactoryService.getEntityManagerFactory().createEntityManager();
 		try {
 			em.getTransaction().begin();
-			
+
 			Reservation reservation = new Reservation();
-			
+
 			CustomerView customerView = reservationView.getCustomer();
 			Customer customer = null;
 			if (customerView.getCustomer_id() != 0) {
 				customer = em.find(Customer.class, customerView.getCustomer_id());
 				customer.getReservations().add(reservation);
-			}
-			else {
+			} else {
 				customer = new Customer();
 				customer.setName(customerView.getLastname());
 				customer.setFirstname(customerView.getFirstname());
@@ -71,16 +134,16 @@ public class ReservationServiceImpl implements ReservationService {
 				customer.setBank_id(customerView.getBank_id());
 				customer.setAccount_nr(customerView.getAccount_no());
 				customer.setPassword(customerView.getEmail());
-				
+
 				HashSet<Reservation> reservations = new HashSet<Reservation>();
 				reservations.add(reservation);
 				customer.setReservations(reservations);
 			}
 			reservation.setCustomer(customer);
-			
+
 			Trip trip = em.find(Trip.class, reservationView.getTrip().getTrip_id());
 			reservation.setTrip(trip);
-			
+
 			reservation.setCars(reservationView.getCars());
 
 			if (reservationView.getShipCabins() != null) {
@@ -94,7 +157,7 @@ public class ReservationServiceImpl implements ReservationService {
 						cabinReservation.setCount(shipCabinView.getRes_count());
 						cabinReservation.setReservation(reservation);
 						res_cabins.add(cabinReservation);
-						System.out.println("***** Kabine hinzugefügt: " +cabin.getId());
+						System.out.println("***** Kabine hinzugefügt: " + cabin.getId());
 					}
 				}
 				reservation.setCabins(res_cabins);
@@ -111,18 +174,15 @@ public class ReservationServiceImpl implements ReservationService {
 			}
 
 			em.persist(reservation);
-			
+
 			em.getTransaction().commit();
-		}
-		catch(Exception ex) {
+		} catch (Exception ex) {
 			em.getTransaction().rollback();
 			ex.printStackTrace();
-		}
-		finally {
+		} finally {
 			em.close();
 		}
-		
-	}
 
+	}
 
 }
