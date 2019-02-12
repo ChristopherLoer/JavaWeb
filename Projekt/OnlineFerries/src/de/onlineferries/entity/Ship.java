@@ -56,5 +56,11 @@ public class Ship implements Serializable {
 	@OrderColumn(name="cabin_index")
 	public List<ShipCabin> getShipCabin() { return shipCabin; }
 	public void setShipCabin(List<ShipCabin> shipCabin) { this.shipCabin = shipCabin; }
+
+	@Override
+	public String toString() {
+		return "Ship [id=" + id + "]";
+	}
+	
 	
 }

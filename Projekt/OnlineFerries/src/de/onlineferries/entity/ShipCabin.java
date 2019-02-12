@@ -52,5 +52,9 @@ public class ShipCabin implements Serializable {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	@Override
+	public String toString() {
+		return "ShipCabin [ship=" + ship + ", cabin=" + cabin + ", count=" + count + ", price=" + price + "]";
+	}
 
 }

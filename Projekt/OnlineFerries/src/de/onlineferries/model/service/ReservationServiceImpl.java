@@ -12,6 +12,7 @@ import de.onlineferries.entity.CabinReservation;
 import de.onlineferries.entity.Customer;
 import de.onlineferries.entity.Reservation;
 import de.onlineferries.entity.Route;
+import de.onlineferries.entity.ShipCabin;
 import de.onlineferries.entity.Travellers;
 import de.onlineferries.entity.Trip;
 import de.onlineferries.view.CustomerView;
@@ -50,53 +51,73 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public boolean isAvailable(int trip_id, List<ShipCabinView> shipCabins, int cars, int travellers) {
-
-		boolean isAvailable = true;
-
+		
 		EntityManager em = EntityManagerFactoryService.getEntityManagerFactory().createEntityManager();
-		List<ReservationView> reservationV = null;
 		try {
-
+			
 			Trip trip = em.find(Trip.class, trip_id);
 
+			// cars check
 			TypedQuery<Reservation> query = em.createQuery("from de.onlineferries.entity.Reservation",
 					Reservation.class);
 			List<Reservation> reservations = query.getResultList();
-
-			TypedQuery<Travellers> query2 = em.createQuery("from de.onlineferries.entity.Travellers", Travellers.class);
-			List<Travellers> travellersList = query2.getResultList();
-
-			for (Travellers traveller : travellersList) {
-				if (traveller.getReservation().getTrip().getId() != trip_id) {
-					travellersList.remove(traveller);
-				}
-			}
-
 			for (Reservation reservation : reservations) {
 				if (reservation.getTrip().getId() != trip_id) {
 					reservations.remove(reservation);
 				}
 			}
-
-			int travellersOnShip = travellersList.size();
 			int carsOnShip = 0;
 			for (Reservation reservation : reservations) {
 				carsOnShip += reservation.getCars();
 			}
-
-			if (trip.getRoute().getShip().getPassengers() < travellersOnShip + travellers) {
-				return false;
-			}
-
 			if (trip.getRoute().getShip().getCars() < carsOnShip + cars) {
 				return false;
 			}
 
-			for (ShipCabinView shipCabin : shipCabins) {
-				if (shipCabin.getRes_count() > 0) {
-					int CabinsOnShip = 10;// TODO aus Reservierungen berechnen
-					if (trip.getRoute().getShip().getShipCabin() + cars < CabinsOnShip) {
-						return false;
+			// travellers check
+			TypedQuery<Travellers> query2 = em.createQuery("from de.onlineferries.entity.Travellers", Travellers.class);
+			List<Travellers> travellersList = query2.getResultList();
+			for (Travellers traveller : travellersList) {
+				if (traveller.getReservation().getTrip().getId() != trip_id) {
+					travellersList.remove(traveller);
+				}
+			}
+			int travellersOnShip = travellersList.size();
+			if (trip.getRoute().getShip().getPassengers() < travellersOnShip + travellers) {
+				return false;
+			}
+
+			// cabins check
+			TypedQuery<ShipCabin> query4 = em.createQuery("from de.onlineferries.entity.ShipCabin", ShipCabin.class);
+			List<ShipCabin> shipCabinList = query4.getResultList();
+			shipCabinList.removeIf(shipCabin->{
+					return shipCabin.getShip().getId() != trip.getRoute().getShip().getId();
+				});
+
+			shipCabinList.forEach(System.out::println);
+			TypedQuery<CabinReservation> query3 = em.createQuery("from de.onlineferries.entity.CabinReservation",
+					CabinReservation.class);
+			List<CabinReservation> cabinReservationList = query3.getResultList();
+			for (CabinReservation cabinReservation : cabinReservationList) {
+				if (cabinReservation.getReservation().getTrip().getId() != trip_id) {
+					cabinReservationList.remove(cabinReservation);
+				}
+			}
+			for (CabinReservation cabinReservation : cabinReservationList) {
+				for (ShipCabin shipCabin : shipCabinList) {
+					if (cabinReservation.getCabin().getId() == shipCabin.getCabin().getId()) {
+						System.out.println("subtraktion");
+						shipCabin.setCount(shipCabin.getCount() - cabinReservation.getCount());
+					}
+				}
+			}
+			for (ShipCabinView shipCabinNew : shipCabins) {
+				for (ShipCabin shipCabin : shipCabinList) {
+					if (shipCabin.getCabin().getId() == shipCabinNew.getCabin_id()) {
+						System.out.println("Pustekuchen"+shipCabin.getCount() +"  "+ shipCabinNew.getRes_count());
+						if(shipCabin.getCount()-shipCabinNew.getRes_count()<0) {
+							return false;
+						}
 					}
 				}
 			}

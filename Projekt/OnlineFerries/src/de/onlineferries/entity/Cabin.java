@@ -40,4 +40,9 @@ public class Cabin implements Serializable {
 		this.passengers = passengers;
 	}
 
+	@Override
+	public String toString() {
+		return "Cabin [id=" + id + ", description=" + description + ", passengers=" + passengers + "]";
+	}
+
 }

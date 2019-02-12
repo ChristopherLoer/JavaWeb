@@ -67,6 +67,10 @@
 			<from-outcome>back</from-outcome>
 			<to-view-id>/auswahlTrip.xhtml</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>notAvailable</from-outcome>
+			<to-view-id>/eingabeReservierung.xhtml</to-view-id>
+		</navigation-case>
 </navigation-rule>
 
 <navigation-rule>
