@@ -11,16 +11,12 @@ import de.onlineferries.entity.Cabin;
 import de.onlineferries.entity.CabinReservation;
 import de.onlineferries.entity.Customer;
 import de.onlineferries.entity.Reservation;
-import de.onlineferries.entity.Route;
 import de.onlineferries.entity.ShipCabin;
 import de.onlineferries.entity.Travellers;
 import de.onlineferries.entity.Trip;
 import de.onlineferries.view.CustomerView;
 import de.onlineferries.view.ReservationView;
-import de.onlineferries.view.RouteView;
 import de.onlineferries.view.ShipCabinView;
-import de.onlineferries.view.TravellerView;
-import de.onlineferries.view.TripView;
 
 public class ReservationServiceImpl implements ReservationService {
 
@@ -51,10 +47,10 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public boolean isAvailable(int trip_id, List<ShipCabinView> shipCabins, int cars, int travellers) {
-		
+
 		EntityManager em = EntityManagerFactoryService.getEntityManagerFactory().createEntityManager();
 		try {
-			
+
 			Trip trip = em.find(Trip.class, trip_id);
 
 			// cars check
@@ -90,9 +86,9 @@ public class ReservationServiceImpl implements ReservationService {
 			// cabins check
 			TypedQuery<ShipCabin> query4 = em.createQuery("from de.onlineferries.entity.ShipCabin", ShipCabin.class);
 			List<ShipCabin> shipCabinList = query4.getResultList();
-			shipCabinList.removeIf(shipCabin->{
-					return shipCabin.getShip().getId() != trip.getRoute().getShip().getId();
-				});
+			shipCabinList.removeIf(shipCabin -> {
+				return shipCabin.getShip().getId() != trip.getRoute().getShip().getId();
+			});
 
 			shipCabinList.forEach(System.out::println);
 			TypedQuery<CabinReservation> query3 = em.createQuery("from de.onlineferries.entity.CabinReservation",
@@ -114,8 +110,8 @@ public class ReservationServiceImpl implements ReservationService {
 			for (ShipCabinView shipCabinNew : shipCabins) {
 				for (ShipCabin shipCabin : shipCabinList) {
 					if (shipCabin.getCabin().getId() == shipCabinNew.getCabin_id()) {
-						System.out.println("Pustekuchen"+shipCabin.getCount() +"  "+ shipCabinNew.getRes_count());
-						if(shipCabin.getCount()-shipCabinNew.getRes_count()<0) {
+						System.out.println("Pustekuchen" + shipCabin.getCount() + "  " + shipCabinNew.getRes_count());
+						if (shipCabin.getCount() - shipCabinNew.getRes_count() < 0) {
 							return false;
 						}
 					}
@@ -178,7 +174,7 @@ public class ReservationServiceImpl implements ReservationService {
 						cabinReservation.setCount(shipCabinView.getRes_count());
 						cabinReservation.setReservation(reservation);
 						res_cabins.add(cabinReservation);
-						System.out.println("***** Kabine hinzugefügt: " + cabin.getId());
+						System.out.println("***** Kabine hinzugefï¿½gt: " + cabin.getId());
 					}
 				}
 				reservation.setCabins(res_cabins);

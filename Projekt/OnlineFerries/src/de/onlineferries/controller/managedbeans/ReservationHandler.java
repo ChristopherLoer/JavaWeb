@@ -164,4 +164,9 @@ public class ReservationHandler implements Serializable {
 
 		return selectedShipCabins;
 	}
+
+	public String registration() {
+
+		return "back";
+	}
 }
