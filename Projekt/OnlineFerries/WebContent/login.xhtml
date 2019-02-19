@@ -25,13 +25,15 @@
 		<h:form>
 			<h:panelGrid columns ="2">
 				<f:facet name="header">#{msg.onlineferries_login_form_title}</f:facet>
+				
 				<h:outputLabel value="#{msg.onlineferries_login_form_username}" for="username"/>
-				<h:inputText id="username" value="#{loginHandler.username}" 
-					required ="true" requiredMessage="#{msg.onlineferries_login_form_required_username}" validator="#{loginHandler.validateUsername}"/>
+				<h:inputText id="username" value="#{loginHandler.username}" required ="true" requiredMessage="#{msg.onlineferries_login_form_required_username}" validator="#{loginHandler.validateUsername}"/>
+				
 				<h:outputLabel value="#{msg.onlineferries_login_form_password}" for="password"/>
-				<h:inputSecret id="password" value="#{loginHandler.password}" 
-					required ="true" requiredMessage="#{msg.onlineferries_login_form_required_password}" validator="#{loginHandler.validatePassword}"/>		
+				<h:inputSecret id="password" value="#{loginHandler.password}" required ="true" requiredMessage="#{msg.onlineferries_login_form_required_password}" validator="#{loginHandler.validatePassword}"/>		
+				
 				<h:panelGroup/>
+				
 				<h:commandButton action="#{loginHandler.login}" value="#{msg.onlineferries_login_form_submit}"/>	
 			</h:panelGrid>
 			<div align="center"><h:messages showDetail="true" showSummary="false" styleClass="message"/></div>

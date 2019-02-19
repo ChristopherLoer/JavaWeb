@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core">
+		
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>#{msg.onlineferries_newCustomer_title}</title>
+</h:head>
+
+<body>
+
+	<f:view locale="#{localeHandler.locale}">
+		<h:outputStylesheet library="css" name="style.css"/>
+
+		<div align="center"><h1>#{msg.onlineferries_welcome_message}</h1></div>
+		<hr/><br/>
+		<div align="center"><h:graphicImage library="images" name="schiff.GIF"/></div>
+		<br/><hr/><br/>
+		
+		<div align="center">
+			<h:panelGrid colums="2" cellpadding="10">
+				<h:form>
+					<h:commandLink action="#{localeHandler.changeLocale}">
+						<h:graphicImage library="images" name="FLGGERM.GIF"/>
+						<f:param name="locale" value="de"/>
+					</h:commandLink>
+					<h:commandLink action="#{localeHandler.changeLocale}">
+						<h:graphicImage library="images" name="FLGUK.GIF"/>
+						<f:param name="locale" value="en"/>
+					</h:commandLink>	
+				</h:form>
+			</h:panelGrid>		
+		</div>
+	
+		<p style="text-align:center;">
+		<h:form>
+			<h:panelGrid columns ="2">
+				<f:facet name="header">#{msg.onlineferries_newCustomer_form_title}</f:facet>
+				<h:panelGroup/>
+				
+				<!-- username -->
+				<h:outputLabel value="#{msg.onlineferries_newCustomer_form_username}" for="username"/>
+				<h:inputText id="username" value="#{newCustomerHandler.name}" required ="true"/>
+				<h:panelGroup/>
+					
+				<!-- password -->
+				<h:outputLabel value="#{msg.onlineferries_newCustomer_form_password}" for="password"/>
+				<h:inputSecret id="password" value="#{newCustomerHandler.password}" required ="true"/>
+				<h:panelGroup/>
+				
+				<!-- firstname -->
+				<h:outputLabel value="#{msg.onlineferries_newCustomer_form_firstname}" for="firstname"/>
+				<h:inputText id="firstname" value="#{newCustomerHandler.firstname}" required ="true"/>	
+				<h:panelGroup/>
+				
+				<!-- city -->				
+				<h:outputLabel value="#{msg.onlineferries_newCustomer_form_city}" for="city"/>
+				<h:inputText id="city" value="#{newCustomerHandler.city}" required ="true"/>	
+				<h:panelGroup/>
+				
+				<!-- street -->				
+				<h:outputLabel value="#{msg.onlineferries_newCustomer_form_street}" for="street"/>
+				<h:inputText id="street" value="#{newCustomerHandler.street}" required ="true"/>	
+				<h:panelGroup/>
+				
+				<!-- zipcode -->				
+				<h:outputLabel value="#{msg.onlineferries_newCustomer_form_zipcode}" for="zipcode"/>
+				<h:inputText id="zipcode" value="#{newCustomerHandler.zipcode}" required ="true"/>	
+				<h:panelGroup/>
+				
+				<!-- email -->				
+				<h:outputLabel value="#{msg.onlineferries_newCustomer_form_email}" for="email"/>
+				<h:inputText id="email" value="#{newCustomerHandler.email}" required ="true"/>	
+				<h:panelGroup/>
+				
+				<!-- bank id -->				
+				<h:outputLabel value="#{msg.onlineferries_newCustomer_form_bankId}" for="bankId"/>
+				<h:inputText id="bankId" value="#{newCustomerHandler.bank_id}" required ="true"/>	
+				<h:panelGroup/>
+				
+				<!-- account nr -->				
+				<h:outputLabel value="#{msg.onlineferries_newCustomer_form_accountNr}" for="accountNr"/>
+				<h:inputText id="accountNr" value="#{newCustomerHandler.account_nr}" required ="true"/>	
+				<h:panelGroup/>
+				
+				<h:commandButton action="#{newCustomerHandler.newCustomer}" value="#{msg.onlineferries_newCustomer_form_submit}"/>	
+			</h:panelGrid>
+			<div align="center"><h:messages showDetail="true" showSummary="false" styleClass="message"/></div>
+		</h:form>
+		</p>
+				
+	</f:view>
+	
+</body>
+
+
+</html>
