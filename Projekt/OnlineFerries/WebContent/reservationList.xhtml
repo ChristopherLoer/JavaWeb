@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core">
+		
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>#{msg.onlineferries_index_title1}</title>
+</h:head>
+
+<body>
+ 
+<f:view>
+	<h:outputStylesheet library="css" name="style.css"/>
+
+	<div class="header">
+  		<h1>#{msg.onlineferries_welcome_message}</h1>
+		<h:panelGrid colums="2" cellpadding="10">
+			<h:form>
+				<h:commandLink action="#{localeHandler.changeLocale}">
+					<h:graphicImage library="images" name="FLGGERM.GIF"/>
+					<f:param name="locale" value="de"/>
+				</h:commandLink>
+				<h:commandLink action="#{localeHandler.changeLocale}">
+					<h:graphicImage library="images" name="FLGUK.GIF"/>
+					<f:param name="locale" value="en"/>
+				</h:commandLink>	
+			</h:form>
+		</h:panelGrid>	
+	</div>
+				
+	<div class="row">
+		<hr/><br/>
+	<h3><h:outputFormat value="#{msg.onlineferries_confirm_customer_values}">
+	    	<f:param value="#{loginHandler.customer.customer_id}"/>
+	    	<f:param value="#{loginHandler.customer.lastname}"/>
+	    	<f:param value="#{loginHandler.customer.firstname}"/>	    	
+	    </h:outputFormat>
+	</h3>
+
+		<div class="col-9">
+
+			<h1>Übersicht aller Reservierungen</h1>
+			
+			<h:dataTable value = "#{reservationsHandler.reservations}" var="reservations" border="1">
+				<f:facet name="Header">Reservierungsliste</f:facet>
+				<h:column>
+					<f:facet name="header">Reservierungsnummer</f:facet>#{reservations.reservations.reservation_id}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Datum</f:facet>#{reservations.reservations.cars}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Start</f:facet>#{reservations.reservations.cars}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Ziel</f:facet>#{reservations.reservations.cars}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Abfahrt</f:facet>#{reservations.reservations.cars}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Ankunft</f:facet>#{reservations.reservations.cars}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Autos</f:facet>#{reservations.reservations.cars}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Kabinen</f:facet>		
+					<h:dataTable value="#{reservations.reservation.shipCabins}" var="cabins">		
+						<h:column>
+							<f:facet name="header">Name: </f:facet>#{cabins.cabinDescr}
+						</h:column>					
+						<h:column>
+							<f:facet name="header">Anzahl: </f:facet>#{cabins.count}
+						</h:column>
+					</h:dataTable>
+				</h:column>	
+				<h:column>
+					<f:facet name="header">Mitreisende</f:facet>		
+					<h:dataTable value="#{reservations.reservation.travellerNames}" var="names">		
+						<h:column>
+							<f:facet name="header">Name: </f:facet>#{names.name}
+						</h:column>					
+		
+					</h:dataTable>
+				</h:column>	
+			</h:dataTable>	
+		</div>
+									
+	</div>
+						
+</f:view>
+			
+</body>
+
+</html>
