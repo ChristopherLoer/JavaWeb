@@ -43,7 +43,7 @@
 
 			<h:panelGrid columns="1">
 			
-				<h:dataTable value = "#{reservationHandler.shipCabins}" var="shipcabin">
+				<h:dataTable value = "#{reservationsHandler.reservation.shipCabins}" var="shipcabin">
 					<f:facet name="Header">#{msg.onlineferries_res1_lblSelectCabin}</f:facet>
 					<h:column>
 						<f:facet name="header">#{msg.onlineferries_res1_lblCabintype}</f:facet>

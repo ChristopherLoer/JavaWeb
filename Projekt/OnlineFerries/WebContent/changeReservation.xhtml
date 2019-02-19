@@ -82,13 +82,13 @@
 
 				<hr/><br/>
 
-				<h:dataTable value="#{reservationHandler.travellerNames}" var="traveller">
+				<h:dataTable value="#{reservationsHandler.reservation.travellerNames}" var="traveller">
 					<h:column>
 						<f:facet name="header">#{msg.onlineferries_res1_lblLastName}</f:facet>
 						<h:inputText value = "#{traveller.name}" id="traveller"
 							required = "true" requiredMessage="#{msg.onlineferries_res1_errorLastName}"
-						 	validator="#{reservationHandler.validateTravellerName}"/>	
-						 <h:message showDetail="true" for = "traveller"/>						
+						 	validator="#{reservationsHandler.validateTravellerName}"/>	
+						 <h:message showDetail="true" for = "traveller"/>
 					</h:column>
 				</h:dataTable>				
 
