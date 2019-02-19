@@ -1,15 +1,10 @@
 package de.onlineferries.controller.managedbeans;
 
 import java.io.Serializable;
-import java.util.ResourceBundle;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 
 import de.onlineferries.model.service.NewCustomerService;
 
@@ -113,25 +108,4 @@ public class NewCustomerHandler implements Serializable  {
 	public void setBank_id(Integer bank_id) {
 		this.bank_id = bank_id;
 	}
-	
-//	public void validateUsername(FacesContext context, UIComponent component, Object value)
-//			throws ValidatorException {
-//			
-//		String v = (String)value;
-//		if (v == null || v.length() < 3 || v.length() > 50) {
-//			ResourceBundle rb = context.getApplication().getResourceBundle(context, "msg");
-//			throw new ValidatorException(new FacesMessage(rb.getString("onlineferries_newCustomer_form_invalid_username")));
-//
-//		}
-//	}
-//
-//	public void validatePassword(FacesContext context, UIComponent component, Object value)
-//			throws ValidatorException {
-//			
-//		String v = (String)value;
-//		if (v == null || v.length() < 3 || v.length() > 50) {
-//			ResourceBundle rb = context.getApplication().getResourceBundle(context, "msg");
-//			throw new ValidatorException(new FacesMessage(rb.getString("onlineferries_login_form_invalid_password")));
-//		}
-//	}
 }

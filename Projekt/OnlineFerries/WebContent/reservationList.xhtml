@@ -46,6 +46,8 @@
 
 			<h1>Übersicht aller Reservierungen</h1>
 			
+			<h:form>
+			
 			<h:dataTable value = "#{reservationsHandler.reservations}" var="reservations" border="1">
 				<f:facet name="Header">Reservierungsliste</f:facet>
 				<h:column>
@@ -90,9 +92,10 @@
 					</h:dataTable>
 				</h:column>	
 				<h:column>
-					<h:commandButton action="#{reservationsHandler.changeReservation}" value="Ändern"/>
+					<h:commandButton action="#{reservationsHandler.changeReservation(reservations.reservation_id)}" value="Ändern"/>
 				</h:column>
 			</h:dataTable>
+			</h:form>
 		</div>
 									
 	</div>

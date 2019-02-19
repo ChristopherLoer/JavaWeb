@@ -116,10 +116,6 @@ public class ReservationHandler implements Serializable {
 		return "notAvailable";
 
 	}
-	
-	public String registration() {
-		return "";
-	}
 
 	public String saveReservation() {
 
@@ -167,10 +163,5 @@ public class ReservationHandler implements Serializable {
 		}
 
 		return selectedShipCabins;
-	}
-
-	public String registration() {
-		// TODO implement code?
-		return "back";
 	}
 }

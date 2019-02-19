@@ -31,6 +31,28 @@
 </navigation-rule>
 
 <navigation-rule>
+	<description>ChangeRes</description>
+	<from-view-id>/reservationList.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/changeReservation.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failed</from-outcome>
+			<to-view-id>/reservationList.xhtml</to-view-id>
+		</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+	<description>ChangeResBack</description>
+	<from-view-id>/changeReservation.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/reservationList.xhtml</to-view-id>
+		</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
 	<description>Route</description>
 	<from-view-id>/index.xhtml</from-view-id>
 		<navigation-case>
