@@ -65,19 +65,19 @@
 					<h:outputLabel value = ""/><h:outputLabel value = "#{msg.onlineferries_res1_lblPrice}"/><h:outputLabel value = "#{msg.onlineferries_res1_lblCount}"/>
 	
 					<h:outputLabel value = "#{msg.onlineferries_res1_lblCars}"/>
-					<h:outputLabel id = "carPrice" value = "#{tripHandler.trip.carPrice}">
+					<h:outputLabel id = "carPrice" value = "#{reservationsHandler.reservation.trip.carPrice}">
 						<f:convertNumber type="currency" currencySymbol = "EUR"/>
 					</h:outputLabel>
-					<h:inputText id="cars" value="#{reservationHandler.cars}" required ="true" />
+					<h:inputText id="cars" value="#{reservationsHandler.reservation.cars}" required ="true" />
 
 					<h:outputLabel value = "#{msg.onlineferries_res1_lblTravellers}"/>	
-					<h:outputLabel id = "passengerPrice" value = "#{tripHandler.trip.passengerPrice}">
+					<h:outputLabel id = "passengerPrice" value = "#{reservationsHandler.reservation.trip.passengerPrice}">
 						<f:convertNumber type="currency" currencySymbol = "EUR"/>
 					</h:outputLabel>
-					<h:selectOneListbox id="travellers" value="#{reservationHandler.travellers}" size="1"
-						onchange="this.form.submit()" immediate="true" valueChangeListener = "#{reservationHandler.changeTraveller}">
-						<f:selectItems value="#{reservationHandler.travellerValues}"/>
-					</h:selectOneListbox>						
+					<h:selectOneListbox id="travellers" value="#{reservationsHandler.travellers}" size="1"
+						onchange="this.form.submit()" immediate="true" valueChangeListener = "#{reservationsHandler.changeTraveller}">
+						<f:selectItems value="#{reservationsHandler.travellerValues}"/>
+					</h:selectOneListbox>
 				</h:panelGrid>
 
 				<hr/><br/>

@@ -41,13 +41,10 @@
 	    	<f:param value="#{loginHandler.customer.firstname}"/>	    	
 	    </h:outputFormat>
 	</h3>
-		<h:form>
+		
 		<div class="col-9">
 
 			<h1>Übersicht aller Reservierungen</h1>
-			
-		<h:selectOneRadio value="#{reservationsHandler.selectedReservation}">
-		
 		
 			<h:dataTable value = "#{reservationsHandler.reservations}" var="reservations" border="1">
 				<f:facet name="Header">Reservierungsliste</f:facet>
@@ -88,22 +85,26 @@
 					<h:dataTable value="#{reservations.travellerNames}" var="names">		
 						<h:column>
 							<f:facet name="header">Namen</f:facet>#{names.name}
-						</h:column>					
-		
+						</h:column>
 					</h:dataTable>
 				</h:column>	
-				<h:column>
-					<f:selectItem itemValue="#{reservations.reservation_id}" itemLabel="#{reservations.reservation_id}"/>
-				</h:column>
-			</h:dataTable>
-			
-			</h:selectOneRadio>			
+			</h:dataTable>	
 			
 		</div>
 		
 		<hr/>
+		
+		<h3>Ändern von Reservierungen</h3>
+		<h:panelGrid colums="3">
+		<h:form>
+		<label for="res_nr">Reservierungsnummer: </label>
+		<h:selectOneListbox id="travellers" value="#{reservationsHandler.selectedReservation}" size="1"
+			onchange="this.form.submit()" immediate="true" valueChangeListener = "#{reservationsHandler.changeReservation}">
+			<f:selectItems value="#{reservationsHandler.reservationValues}"/>
+		</h:selectOneListbox>
 		<h:commandButton action="#{reservationsHandler.changeReservation}" value="Ändern"/>
-		</h:form>							
+		</h:form>
+		</h:panelGrid>							
 	</div>
 						
 </f:view>
