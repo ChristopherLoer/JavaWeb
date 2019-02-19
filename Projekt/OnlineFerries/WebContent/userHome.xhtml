@@ -47,7 +47,7 @@
 		<h:form>
 			<h:panelGrid columns="3">
 				<h:button outcome="anzeigeReservierung.xhtml" value="Letzte Reservierung anzeigen"/>
-				<h:button outcome="reservationList.xhtml" value="Reservierungsliste"/>	
+				<h:commandButton action="#{reservationsHandler.reservations}" value="Reservierungsliste"/>	
 				<h:button outcome="changeUserData.xhtml" value="Kundendaten ändern"/>		
 			</h:panelGrid>
 		</h:form>

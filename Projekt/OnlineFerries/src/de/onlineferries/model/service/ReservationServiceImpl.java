@@ -17,6 +17,8 @@ import de.onlineferries.entity.Trip;
 import de.onlineferries.view.CustomerView;
 import de.onlineferries.view.ReservationView;
 import de.onlineferries.view.ShipCabinView;
+import de.onlineferries.view.TravellerView;
+import de.onlineferries.view.TripView;
 
 public class ReservationServiceImpl implements ReservationService {
 
@@ -202,4 +204,90 @@ public class ReservationServiceImpl implements ReservationService {
 
 	}
 
+	@Override
+	public List<ReservationView> getReservationsForCustomer(CustomerView cust) {
+
+		System.out.println("Searching for Reservations");
+
+		EntityManager em = EntityManagerFactoryService.getEntityManagerFactory().createEntityManager();
+		List<ReservationView> res = null;
+
+		TypedQuery<Reservation> reservations = em.createQuery("from de.onlineferries.entity.Reservation",
+				Reservation.class);
+		List<Reservation> r = reservations.getResultList();
+
+		System.out.println("Reservations found");
+
+		res = new ArrayList<ReservationView>();
+		for (Reservation re : r) {
+			if (re.getCustomer().getId() == cust.getCustomer_id()) {
+				ReservationView rv = new ReservationView();
+				rv.setReservation_id(re.getId());
+				rv.setCustomer(cust);
+				rv.setCars(re.getCars());
+
+				rv.setTravellerNames(convertTravellers(re.getTravellers()));
+				rv.setTrip(convertTrip(re.getTrip()));
+
+				rv.setShipCabins(convertShipCabins(re.getCabins()));
+
+				res.add(rv);
+			}
+		}
+
+		System.out.println("Returning List of ReservationView");
+		System.out.println(res.get(0));
+		return res;
+	}
+
+	private List<TravellerView> convertTravellers(List<Travellers> trav) {
+
+		List<TravellerView> travellers = new ArrayList<TravellerView>();
+
+		for (Travellers t : trav) {
+			travellers.add(new TravellerView(t.getId(), t.getFullName()));
+		}
+
+		return travellers;
+	}
+
+	private TripView convertTrip(Trip t) {
+
+		TripView tv = new TripView();
+
+		tv.setTrip_id(t.getId());
+		tv.setDeparture(t.getDeparture());
+		tv.setArrival(t.getArrival());
+		tv.setDate(t.getDate());
+		tv.setRouteid(t.getRoute().getId());
+		tv.setCarPrice(t.getPrice_car());
+		tv.setPassengerPrice(t.getPrice_passenger());
+
+		return tv;
+	}
+
+	private List<ShipCabinView> convertShipCabins(List<CabinReservation> cr) {
+
+		List<ShipCabinView> scv = new ArrayList<ShipCabinView>();
+
+		for (CabinReservation r : cr) {
+			ShipCabinView sc = new ShipCabinView();
+			Cabin c = r.getCabin();
+			sc.setCabin_id(c.getId());
+			sc.setPassengers(c.getPassengers());
+			sc.setCabinDescr(c.getDescription());
+			sc.setRes_count(r.getCount());
+			// TODO Daten holen
+			// Hier wird das Schiff benötigt, an dieses kommt man über folgende Tabellen
+			// Reservation -> Trip -> Route -> Ship
+			// Danach kann man die Kabine eindeutig bestimmen und Count und Price
+			// herausfinden
+			sc.setCount(0);
+			sc.setPrice(0);
+
+			scv.add(sc);
+		}
+
+		return scv;
+	}
 }

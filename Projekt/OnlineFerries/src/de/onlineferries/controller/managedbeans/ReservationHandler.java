@@ -170,7 +170,7 @@ public class ReservationHandler implements Serializable {
 	}
 
 	public String registration() {
-
+		// TODO implement code?
 		return "back";
 	}
 }
