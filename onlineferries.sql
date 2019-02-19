@@ -70,7 +70,6 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id`, `account_nr`, `bank_id`, `city`, `email`, `firstname`, `name`, `password`, `street`, `zipcode`) VALUES
-(1, 111111111, 11111111, 'Paderborn', 'test@test', 'test', 'test', 'test', 'test', '33106'),
 (2, 111111111, 11111111, 'Paderborn', 'test@test', 'test', 'test', 'test', 'test', '33106');
 
 -- --------------------------------------------------------
@@ -142,9 +141,9 @@ CREATE TABLE `ship` (
 --
 
 INSERT INTO `ship` (`ship_id`, `cars`, `description`, `passengers`) VALUES
-(5001, 0, '2000', 500),
-(5002, 0, '1800', 400),
-(5003, 0, '800', 250);
+(5001, 20, '2000', 500),
+(5002, 20, '1800', 400),
+(5003, 20, '800', 250);
 
 -- --------------------------------------------------------
 

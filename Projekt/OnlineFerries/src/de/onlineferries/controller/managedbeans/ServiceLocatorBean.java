@@ -7,6 +7,8 @@ import javax.faces.bean.ManagedBean;
 
 import de.onlineferries.model.service.LoginService;
 import de.onlineferries.model.service.LoginServiceImpl;
+import de.onlineferries.model.service.NewCustomerService;
+import de.onlineferries.model.service.NewCustomerServiceImpl;
 import de.onlineferries.model.service.ReservationService;
 import de.onlineferries.model.service.ReservationServiceImpl;
 import de.onlineferries.model.service.RouteService;
@@ -24,12 +26,14 @@ public class ServiceLocatorBean implements ServiceLocator, Serializable {
 	private RouteService routeService;
 	private ShipService shipService;
 	private ReservationService reservationService;
+	private NewCustomerService newCustomerService;
 	
 	public ServiceLocatorBean() {
 		loginService = new LoginServiceImpl();
 		routeService = new RouteServiceImpl();
 		shipService = new ShipServiceImpl();
 		reservationService = new ReservationServiceImpl();
+		newCustomerService = new NewCustomerServiceImpl();
 	}
 	
 	@Override
@@ -51,5 +55,12 @@ public class ServiceLocatorBean implements ServiceLocator, Serializable {
 	public ReservationService getReservationService() {
 		return reservationService;
 	}
+
+	@Override
+	public NewCustomerService getNewCustomerService() {
+		return newCustomerService;
+	}
+	
+	
 
 }

@@ -116,6 +116,10 @@ public class ReservationHandler implements Serializable {
 		return "notAvailable";
 
 	}
+	
+	public String registration() {
+		return "";
+	}
 
 	public String saveReservation() {
 

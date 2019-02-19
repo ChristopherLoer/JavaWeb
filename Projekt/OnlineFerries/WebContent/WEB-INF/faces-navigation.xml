@@ -77,6 +77,10 @@
 	<description>Reservation3</description>
 	<from-view-id>/auswahlKundentyp.xhtml</from-view-id>
 		<navigation-case>
+			<from-outcome>newCustomer</from-outcome>
+			<to-view-id>/neuerKunde.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>back</from-outcome>
 			<to-view-id>/eingabeReservierung.xhtml</to-view-id>
 		</navigation-case>
@@ -92,6 +96,15 @@
 		<navigation-case>
 			<from-outcome>back</from-outcome>
 			<to-view-id>/eingabeReservierung.xhtml</to-view-id>
+		</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+	<description>NewCustomer</description>
+	<from-view-id>/neuerKunde.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
 		</navigation-case>
 </navigation-rule>
 
