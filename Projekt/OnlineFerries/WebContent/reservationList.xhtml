@@ -41,11 +41,14 @@
 	    	<f:param value="#{loginHandler.customer.firstname}"/>	    	
 	    </h:outputFormat>
 	</h3>
-
+		<h:form>
 		<div class="col-9">
 
 			<h1>Übersicht aller Reservierungen</h1>
 			
+		<h:selectOneRadio value="#{reservationsHandler.selectedReservation}">
+		
+		
 			<h:dataTable value = "#{reservationsHandler.reservations}" var="reservations" border="1">
 				<f:facet name="Header">Reservierungsliste</f:facet>
 				<h:column>
@@ -73,10 +76,10 @@
 					<f:facet name="header">Kabinen</f:facet>		
 					<h:dataTable value="#{reservations.shipCabins}" var="cabins">		
 						<h:column>
-							<f:facet name="header">Name: </f:facet>#{cabins.cabinDescr}
+							<f:facet name="header">Name</f:facet>#{cabins.cabinDescr}
 						</h:column>					
 						<h:column>
-							<f:facet name="header">Anzahl: </f:facet>#{cabins.count}
+							<f:facet name="header">Anzahl</f:facet>#{cabins.res_count}
 						</h:column>
 					</h:dataTable>
 				</h:column>	
@@ -84,17 +87,23 @@
 					<f:facet name="header">Mitreisende</f:facet>		
 					<h:dataTable value="#{reservations.travellerNames}" var="names">		
 						<h:column>
-							<f:facet name="header">Name: </f:facet>#{names.name}
+							<f:facet name="header">Namen</f:facet>#{names.name}
 						</h:column>					
 		
 					</h:dataTable>
 				</h:column>	
 				<h:column>
-					<h:commandButton action="#{reservationsHandler.changeReservation}" value="Ändern"/>
+					<f:selectItem itemValue="#{reservations.reservation_id}" itemLabel="#{reservations.reservation_id}"/>
 				</h:column>
 			</h:dataTable>
+			
+			</h:selectOneRadio>			
+			
 		</div>
-									
+		
+		<hr/>
+		<h:commandButton action="#{reservationsHandler.changeReservation}" value="Ändern"/>
+		</h:form>							
 	</div>
 						
 </f:view>

@@ -16,6 +16,7 @@ import de.onlineferries.view.ReservationView;
 public class ReservationsHandler implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private int selectedReservation;
 
 	private List<ReservationView> reservations = new ArrayList<ReservationView>();
 
@@ -63,11 +64,23 @@ public class ReservationsHandler implements Serializable {
 		return "noRes";
 	}
 
+	public String changeReservation() {
+		return "success";
+	}
+
 	public List<ReservationView> getReservations() {
 		return reservations;
 	}
 
 	public void setReservations(List<ReservationView> reservations) {
 		this.reservations = reservations;
+	}
+
+	public int getSelectedReservation() {
+		return selectedReservation;
+	}
+
+	public void setSelectedReservation(int selectedReservation) {
+		this.selectedReservation = selectedReservation;
 	}
 }
