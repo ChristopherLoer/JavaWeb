@@ -49,29 +49,29 @@
 			<h:dataTable value = "#{reservationsHandler.reservations}" var="reservations" border="1">
 				<f:facet name="Header">Reservierungsliste</f:facet>
 				<h:column>
-					<f:facet name="header">Reservierungsnummer</f:facet>#{reservations.reservations.reservation_id}
+					<f:facet name="header">Reservierungsnummer</f:facet>#{reservations.reservation_id}
 				</h:column>
 				<h:column>
-					<f:facet name="header">Datum</f:facet>#{reservations.reservations.cars}
+					<f:facet name="header">Datum</f:facet>#{reservations.trip.date}
 				</h:column>
 				<h:column>
-					<f:facet name="header">Start</f:facet>#{reservations.reservations.cars}
+					<f:facet name="header">Start</f:facet>#{reservations.trip.routeid}
 				</h:column>
 				<h:column>
-					<f:facet name="header">Ziel</f:facet>#{reservations.reservations.cars}
+					<f:facet name="header">Ziel</f:facet>#{reservations.trip.routeid}
 				</h:column>
 				<h:column>
-					<f:facet name="header">Abfahrt</f:facet>#{reservations.reservations.cars}
+					<f:facet name="header">Abfahrt</f:facet>#{reservations.trip.departure}
 				</h:column>
 				<h:column>
-					<f:facet name="header">Ankunft</f:facet>#{reservations.reservations.cars}
+					<f:facet name="header">Ankunft</f:facet>#{reservations.trip.arrival}
 				</h:column>
 				<h:column>
-					<f:facet name="header">Autos</f:facet>#{reservations.reservations.cars}
+					<f:facet name="header">Autos</f:facet>#{reservations.cars}
 				</h:column>
 				<h:column>
 					<f:facet name="header">Kabinen</f:facet>		
-					<h:dataTable value="#{reservations.reservation.shipCabins}" var="cabins">		
+					<h:dataTable value="#{reservations.shipCabins}" var="cabins">		
 						<h:column>
 							<f:facet name="header">Name: </f:facet>#{cabins.cabinDescr}
 						</h:column>					
@@ -82,14 +82,17 @@
 				</h:column>	
 				<h:column>
 					<f:facet name="header">Mitreisende</f:facet>		
-					<h:dataTable value="#{reservations.reservation.travellerNames}" var="names">		
+					<h:dataTable value="#{reservations.travellerNames}" var="names">		
 						<h:column>
 							<f:facet name="header">Name: </f:facet>#{names.name}
 						</h:column>					
 		
 					</h:dataTable>
 				</h:column>	
-			</h:dataTable>	
+				<h:column>
+					<h:commandButton action="#{reservationsHandler.changeReservation}" value="Ändern"/>
+				</h:column>
+			</h:dataTable>
 		</div>
 									
 	</div>

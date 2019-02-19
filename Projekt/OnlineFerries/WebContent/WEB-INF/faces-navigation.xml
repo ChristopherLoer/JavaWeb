@@ -18,6 +18,19 @@
 </navigation-rule>
 
 <navigation-rule>
+	<description>ResList</description>
+	<from-view-id>/userHome.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/reservationList.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>noRes</from-outcome>
+			<to-view-id>/userHome.xhtml</to-view-id>
+		</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
 	<description>Route</description>
 	<from-view-id>/index.xhtml</from-view-id>
 		<navigation-case>

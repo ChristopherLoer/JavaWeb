@@ -1,12 +1,15 @@
 package de.onlineferries.controller.managedbeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
-import de.onlineferries.view.ReservationsView;
+import de.onlineferries.model.service.ReservationService;
+import de.onlineferries.view.ReservationView;
 
 @ManagedBean
 @SessionScoped
@@ -14,7 +17,7 @@ public class ReservationsHandler implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private ReservationsView reservations;
+	private List<ReservationView> reservations = new ArrayList<ReservationView>();
 
 	@ManagedProperty("#{serviceLocatorBean}")
 	private ServiceLocator serviceLocator;
@@ -44,11 +47,27 @@ public class ReservationsHandler implements Serializable {
 		this.loginHandler = loginHandler;
 	}
 
-	public ReservationsView getReservations() {
+	public String reservations() {
+		System.out.println("Reservations Entered");
+
+		ReservationService rs = serviceLocator.getReservationService();
+
+		System.out.println("Service found");
+		reservations = rs.getReservationsForCustomer(loginHandler.getCustomer());
+		if (!reservations.isEmpty()) {
+			System.out.println("Reservations Found");
+			return "success";
+		}
+		System.out.println("No Reservations Found");
+
+		return "noRes";
+	}
+
+	public List<ReservationView> getReservations() {
 		return reservations;
 	}
 
-	public void setReservations(ReservationsView reservations) {
+	public void setReservations(List<ReservationView> reservations) {
 		this.reservations = reservations;
 	}
 }
