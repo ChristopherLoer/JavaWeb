@@ -54,79 +54,88 @@
 					<h:outputLabel
 						value="#{msg.onlineferries_newCustomer_form_username}"
 						for="username" />
-					<h:inputText id="username" value="#{newCustomerHandler.name}"
-						required="true" />
+					<h:inputText id="username" value="#{newCustomerHandler.name}" />
 					<h:panelGroup />
 
-					<!-- password -->
-					<h:outputLabel
-						value="#{msg.onlineferries_newCustomer_form_password}"
-						for="password" />
-					<h:inputSecret id="password" value="#{newCustomerHandler.password}"
-						required="true" />
-					<h:panelGroup />
+					<h:commandButton
+						value="#{msg.onlineferries_changeCustomer_form_load}">
+						<f:ajax execute="username" render="accountNr" />
+					</h:commandButton>
 
-					<!-- firstname -->
-					<h:outputLabel
-						value="#{msg.onlineferries_newCustomer_form_firstname}"
-						for="firstname" />
-					<h:inputText id="firstname" value="#{newCustomerHandler.firstname}"
-						required="true" />
 					<h:panelGroup />
+					<div align="center" id="output">
+						<!-- password -->
+						<h:outputLabel
+							value="#{msg.onlineferries_newCustomer_form_password}"
+							for="password" />
+						<h:inputSecret id="password"
+							value="#{newCustomerHandler.password}" required="true" />
+						<h:panelGroup />
 
-					<!-- city -->
-					<h:outputLabel value="#{msg.onlineferries_newCustomer_form_city}"
-						for="city" />
-					<h:inputText id="city" value="#{newCustomerHandler.city}"
-						required="true" />
-					<h:panelGroup />
+						<!-- firstname -->
+						<h:outputLabel
+							value="#{msg.onlineferries_newCustomer_form_firstname}"
+							for="firstname" />
+						<h:inputText id="firstname"
+							value="#{newCustomerHandler.firstname}" required="true" />
+						<h:panelGroup />
 
-					<!-- street -->
-					<h:outputLabel value="#{msg.onlineferries_newCustomer_form_street}"
-						for="street" />
-					<h:inputText id="street" value="#{newCustomerHandler.street}"
-						required="true" />
-					<h:panelGroup />
+						<!-- city -->
+						<h:outputLabel value="#{msg.onlineferries_newCustomer_form_city}"
+							for="city" />
+						<h:inputText id="city" value="#{newCustomerHandler.city}"
+							required="true" />
+						<h:panelGroup />
 
-					<!-- zipcode -->
-					<h:outputLabel
-						value="#{msg.onlineferries_newCustomer_form_zipcode}"
-						for="zipcode" />
-					<h:inputText id="zipcode" value="#{newCustomerHandler.zipcode}"
-						required="true" />
-					<h:panelGroup />
+						<!-- street -->
+						<h:outputLabel
+							value="#{msg.onlineferries_newCustomer_form_street}" for="street" />
+						<h:inputText id="street" value="#{newCustomerHandler.street}"
+							required="true" />
+						<h:panelGroup />
 
-					<!-- email -->
-					<h:outputLabel value="#{msg.onlineferries_newCustomer_form_email}"
-						for="email" />
-					<h:inputText id="email" value="#{newCustomerHandler.email}"
-						required="true" />
-					<h:panelGroup />
+						<!-- zipcode -->
+						<h:outputLabel
+							value="#{msg.onlineferries_newCustomer_form_zipcode}"
+							for="zipcode" />
+						<h:inputText id="zipcode" value="#{newCustomerHandler.zipcode}"
+							required="true" />
+						<h:panelGroup />
 
-					<!-- bank id -->
-					<h:outputLabel value="#{msg.onlineferries_newCustomer_form_bankId}"
-						for="bankId" />
-					<h:inputText id="bankId" value="#{newCustomerHandler.bank_id}"
-						required="true" />
-					<h:panelGroup />
+						<!-- email -->
+						<h:outputLabel value="#{msg.onlineferries_newCustomer_form_email}"
+							for="email" />
+						<h:inputText id="email" value="#{newCustomerHandler.email}"
+							required="true" />
+						<h:panelGroup />
 
-					<!-- account nr -->
-					<h:outputLabel
-						value="#{msg.onlineferries_newCustomer_form_accountNr}"
-						for="accountNr" />
-					<h:inputText id="accountNr"
-						value="#{newCustomerHandler.account_nr}" required="true" />
-					<h:panelGroup />
+						<!-- bank id -->
+						<h:outputLabel
+							value="#{msg.onlineferries_newCustomer_form_bankId}" for="bankId" />
+						<h:inputText id="bankId" value="#{newCustomerHandler.bank_id}"
+							required="true" />
+						<h:panelGroup />
 
-					<h:commandButton action="#{newCustomerHandler.newCustomer}"
-						value="#{msg.onlineferries_changeCustomer_form_submit}" />
-					<h:commandButton action="#{newCustomerHandler.newCustomer}"
-						value="#{msg.onlineferries_changeCustomer_form_abort}" />
+						<!-- account nr -->
+						<h:outputLabel
+							value="#{msg.onlineferries_newCustomer_form_accountNr}"
+							for="accountNr" />
+						<h:inputText id="accountNr" value="#{newCustomerHandler.idAjax}"
+							readonly="true" />
+
+						<h:commandButton action="#{newCustomerHandler.save}"
+							value="#{msg.onlineferries_changeCustomer_form_submit}" />
+						<h:panelGroup />
+						<h:commandButton action="#{newCustomerHandler.back}"
+							value="#{msg.onlineferries_changeCustomer_form_abort}" />
+					</div>
 				</h:panelGrid>
 				<div align="center">
 					<h:messages showDetail="true" showSummary="false"
 						styleClass="message" />
 				</div>
+				<h:messages showDetail="true" showSummary="false"
+					styleClass="message" />
 			</h:form>
 		</p>
 	</f:view>
