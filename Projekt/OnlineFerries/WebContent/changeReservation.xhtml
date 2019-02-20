@@ -86,8 +86,7 @@
 					<h:column>
 						<f:facet name="header">#{msg.onlineferries_res1_lblLastName}</f:facet>
 						<h:inputText value = "#{traveller.name}" id="traveller"
-							required = "true" requiredMessage="#{msg.onlineferries_res1_errorLastName}"
-						 	validator="#{reservationsHandler.validateTravellerName}"/>	
+							required = "true" requiredMessage="#{msg.onlineferries_res1_errorLastName}"/>	
 						 <h:message showDetail="true" for = "traveller"/>
 					</h:column>
 				</h:dataTable>				
@@ -95,8 +94,7 @@
 			</h:panelGrid>
 						
 			<h:panelGrid columns = "1">
-				<h:commandButton action="#{reservationHandler.selectCustomerType}" value="#{msg.onlineferries_changeReservation_form_submit}"/>	
-				<h:commandLink action="#{reservationHandler.back}" value="#{msg.onlineferries_res1_back}" immediate = "true"/>				
+				<h:commandButton action="#{reservationsHandler.update}" value="Reservierung ändern"/>
 			</h:panelGrid>			
 		
 		</h:form>
