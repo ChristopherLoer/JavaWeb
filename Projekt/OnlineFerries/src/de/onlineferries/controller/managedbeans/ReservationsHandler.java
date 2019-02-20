@@ -19,13 +19,11 @@ import de.onlineferries.view.TravellerView;
 public class ReservationsHandler implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private String selectedReservation;
-	private String[] reservationValues;
-	private ReservationView reservation;
 	private int travellers;
 
 	private List<ReservationView> reservations = new ArrayList<ReservationView>();
 	private ReservationView resView;
+	private int countTravellers;
 
 	@ManagedProperty("#{serviceLocatorBean}")
 	private ServiceLocator serviceLocator;
@@ -62,31 +60,10 @@ public class ReservationsHandler implements Serializable {
 		reservations = rs.getReservationsForCustomer(loginHandler.getCustomer());
 		if (!reservations.isEmpty()) {
 
-			reservationValues = new String[reservations.size()];
-			List<String> help = new ArrayList<String>();
-			for (ReservationView r : reservations) {
-				help.add(r.getReservation_id().toString());
-			}
-
-			reservationValues = help.toArray(reservationValues);
-
 			return "success";
 		}
 
 		return "noRes";
-	}
-
-	public String changeReservation() {
-
-		reservation = reservations.get(Integer.parseInt(selectedReservation) - 1);
-
-		if (reservation != null) {
-			travellers = reservation.getTravellerNames().size();
-
-			return "success";
-		}
-
-		return "NoSuccess";
 	}
 
 	public void changeTraveller(ValueChangeEvent ev) {
@@ -94,13 +71,7 @@ public class ReservationsHandler implements Serializable {
 		ArrayList<TravellerView> help = new ArrayList<TravellerView>(travellers);
 		for (int i = 0; i < travellers; i++)
 			help.add(new TravellerView(i, ""));
-		reservation.setTravellerNames(help);
-		FacesContext.getCurrentInstance().renderResponse();
-	}
-
-	public void changeReservation(ValueChangeEvent ev) {
-		selectedReservation = (String) ev.getNewValue();
-
+//		reservation.setTravellerNames(help);
 		FacesContext.getCurrentInstance().renderResponse();
 	}
 
@@ -122,6 +93,14 @@ public class ReservationsHandler implements Serializable {
 
 	public void setResView(ReservationView resView) {
 		this.resView = resView;
+	}	
+
+	public void setCountTravellers(int countTravellers) {
+		this.countTravellers = countTravellers;
+	}
+
+	public int getCountTravellers() {
+		return resView.getTravellerNames().size();
 	}
 
 	public String changeReservation(int res_id) {
