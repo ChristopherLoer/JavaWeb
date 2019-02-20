@@ -117,10 +117,6 @@ public class ReservationHandler implements Serializable {
 
 	}
 
-	public String registration() {
-		return "";
-	}
-
 	public String saveReservation() {
 
 		ReservationView reservationView = new ReservationView(tripHandler.getTrip(), loginHandler.getCustomer(),

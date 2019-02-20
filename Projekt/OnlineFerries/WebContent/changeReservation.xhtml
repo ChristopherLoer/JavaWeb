@@ -22,7 +22,7 @@
 		<div align="center"><h:graphicImage library="images" name="schiff.GIF"/></div>
 		<br/><hr/><br/>
 		
-		<h:panelGrid columns="3">
+<!-- 		<h:panelGrid columns="3">
 			<h:outputFormat value="#{msg.onlineferries_trip_currentroute}">
 				<f:param value="#{routeHandler.route.start}"/>
 				<f:param value="#{routeHandler.route.destination}"/>	
@@ -37,13 +37,13 @@
 			</h:outputFormat>
 		</h:panelGrid>
 
-		<br/><hr/><br/>
+		<br/><hr/><br/> -->
 				
 		<h:form>
 
 			<h:panelGrid columns="1">
 			
-				<h:dataTable value = "#{reservationHandler.shipCabins}" var="shipcabin">
+				<h:dataTable value = "#{reservationsHandler.resView.shipCabins}" var="shipcabin">
 					<f:facet name="Header">#{msg.onlineferries_res1_lblSelectCabin}</f:facet>
 					<h:column>
 						<f:facet name="header">#{msg.onlineferries_res1_lblCabintype}</f:facet>
@@ -68,21 +68,21 @@
 					<h:outputLabel id = "carPrice" value = "#{reservationsHandler.reservation.trip.carPrice}">
 						<f:convertNumber type="currency" currencySymbol = "EUR"/>
 					</h:outputLabel>
-					<h:inputText id="cars" value="#{reservationsHandler.reservation.cars}" required ="true" />
+					<h:inputText id="cars" value="#{reservationsHandler.resView.cars}" required ="true" />
 
 					<h:outputLabel value = "#{msg.onlineferries_res1_lblTravellers}"/>	
 					<h:outputLabel id = "passengerPrice" value = "#{reservationsHandler.reservation.trip.passengerPrice}">
 						<f:convertNumber type="currency" currencySymbol = "EUR"/>
 					</h:outputLabel>
-					<h:selectOneListbox id="travellers" value="#{reservationsHandler.travellers}" size="1"
-						onchange="this.form.submit()" immediate="true" valueChangeListener = "#{reservationsHandler.changeTraveller}">
-						<f:selectItems value="#{reservationsHandler.travellerValues}"/>
-					</h:selectOneListbox>
+					<h:selectOneListbox id="travellers" value="#{reservationsHandler.resView.travellerNames}" size="1"
+						onchange="this.form.submit()" immediate="true" valueChangeListener = "#{reservationHandler.changeTraveller}">
+						<f:selectItems value="#{reservationHandler.travellerValues}"/>
+					</h:selectOneListbox>						
 				</h:panelGrid>
 
 				<hr/><br/>
 
-				<h:dataTable value="#{reservationsHandler.reservation.travellerNames}" var="traveller">
+				<h:dataTable value="#{reservationsHandler.resView.travellerNames}" var="traveller">
 					<h:column>
 						<f:facet name="header">#{msg.onlineferries_res1_lblLastName}</f:facet>
 						<h:inputText value = "#{traveller.name}" id="traveller"
@@ -95,7 +95,7 @@
 			</h:panelGrid>
 						
 			<h:panelGrid columns = "1">
-				<h:commandButton action="#{reservationHandler.selectCustomerType}" value="#{msg.onlineferries_res1_submit}"/>	
+				<h:commandButton action="#{reservationHandler.selectCustomerType}" value="#{msg.onlineferries_changeReservation_form_submit}"/>	
 				<h:commandLink action="#{reservationHandler.back}" value="#{msg.onlineferries_res1_back}" immediate = "true"/>				
 			</h:panelGrid>			
 		

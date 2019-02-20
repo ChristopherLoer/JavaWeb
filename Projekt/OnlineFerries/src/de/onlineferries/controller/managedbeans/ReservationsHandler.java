@@ -25,6 +25,7 @@ public class ReservationsHandler implements Serializable {
 	private int travellers;
 
 	private List<ReservationView> reservations = new ArrayList<ReservationView>();
+	private ReservationView resView;
 
 	@ManagedProperty("#{serviceLocatorBean}")
 	private ServiceLocator serviceLocator;
@@ -114,36 +115,23 @@ public class ReservationsHandler implements Serializable {
 	public void setReservations(List<ReservationView> reservations) {
 		this.reservations = reservations;
 	}
-
-	public String getSelectedReservation() {
-		return selectedReservation;
+	
+	public ReservationView getResView() {
+		return resView;
 	}
 
-	public void setSelectedReservation(String selectedReservation) {
-		this.selectedReservation = selectedReservation;
+	public void setResView(ReservationView resView) {
+		this.resView = resView;
 	}
 
-	public String[] getReservationValues() {
-		return reservationValues;
-	}
-
-	public void setReservationValues(String[] reservationValues) {
-		this.reservationValues = reservationValues;
-	}
-
-	public ReservationView getReservation() {
-		return reservation;
-	}
-
-	public void setReservation(ReservationView reservation) {
-		this.reservation = reservation;
-	}
-
-	public int getTravellers() {
-		return travellers;
-	}
-
-	public void setTravellers(int travellers) {
-		this.travellers = travellers;
+	public String changeReservation(int res_id) {
+		System.out.println("change reservation with id: " + res_id);
+		for(ReservationView res: reservations) {
+			if (res.getReservation_id().equals(res_id)) {
+				resView = new ReservationView(res.getTrip(), res.getCustomer(), res.getShipCabins(), res.getCars(), res.getTravellerNames());
+				return "success";
+			}
+		}		
+		return "failed";
 	}
 }
