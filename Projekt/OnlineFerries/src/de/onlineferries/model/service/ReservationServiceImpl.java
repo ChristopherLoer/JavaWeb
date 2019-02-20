@@ -284,4 +284,89 @@ public class ReservationServiceImpl implements ReservationService {
 
 		return scv;
 	}
+
+	@Override
+	public void updateReservation(ReservationView reservationView) {
+
+		EntityManager em = EntityManagerFactoryService.getEntityManagerFactory().createEntityManager();
+
+		// Detatchen der ursprünglichen Reservierung
+		TypedQuery<Reservation> rr = em.createQuery("from de.onlineferries.entity.Reservation", Reservation.class);
+		List<Reservation> r = rr.getResultList();
+		for (Reservation res : r) {
+			if (res.getId() == reservationView.getReservation_id()) {
+				em.detach(res);
+			}
+		}
+
+		// Erstellen der geänderten Reservierungsobjekte
+		try {
+			em.getTransaction().begin();
+
+			Reservation reservation = new Reservation();
+
+			CustomerView customerView = reservationView.getCustomer();
+			Customer customer = null;
+			if (customerView.getCustomer_id() != 0) {
+				customer = em.find(Customer.class, customerView.getCustomer_id());
+				customer.getReservations().add(reservation);
+			} else {
+				customer = new Customer();
+				customer.setName(customerView.getLastname());
+				customer.setFirstname(customerView.getFirstname());
+				customer.setStreet(customerView.getStreet());
+				customer.setZipcode(customerView.getZip());
+				customer.setCity(customerView.getCity());
+				customer.setEmail(customerView.getEmail());
+				customer.setBank_id(customerView.getBank_id());
+				customer.setAccount_nr(customerView.getAccount_no());
+				customer.setPassword(customerView.getEmail());
+
+				HashSet<Reservation> reservations = new HashSet<Reservation>();
+				reservations.add(reservation);
+				customer.setReservations(reservations);
+			}
+			reservation.setCustomer(customer);
+
+			Trip trip = em.find(Trip.class, reservationView.getTrip().getTrip_id());
+			reservation.setTrip(trip);
+
+			reservation.setCars(reservationView.getCars());
+
+			if (reservationView.getShipCabins() != null) {
+				List<CabinReservation> res_cabins = new ArrayList<CabinReservation>();
+				for (int i = 0; i < reservationView.getShipCabins().size(); i++) {
+					ShipCabinView shipCabinView = reservationView.getShipCabins().get(i);
+					if (shipCabinView.getRes_count() > 0) {
+						CabinReservation cabinReservation = new CabinReservation();
+						Cabin cabin = em.find(Cabin.class, shipCabinView.getCabin_id());
+						cabinReservation.setCabin(cabin);
+						cabinReservation.setCount(shipCabinView.getRes_count());
+						cabinReservation.setReservation(reservation);
+						res_cabins.add(cabinReservation);
+					}
+				}
+				reservation.setCabins(res_cabins);
+			}
+
+			if (reservationView.getTravellerNames() != null) {
+				List<Travellers> tr = new ArrayList<Travellers>();
+				for (int i = 0; i < reservationView.getTravellerNames().size(); i++) {
+					Travellers traveller = new Travellers(reservationView.getTravellerNames().get(i).getName());
+					traveller.setReservation(reservation);
+					tr.add(traveller);
+				}
+				reservation.setTravellers(tr);
+			}
+
+			em.merge(reservation);
+
+			em.getTransaction().commit();
+		} catch (Exception ex) {
+			em.getTransaction().rollback();
+			ex.printStackTrace();
+		} finally {
+			em.close();
+		}
+	}
 }

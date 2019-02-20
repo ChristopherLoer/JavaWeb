@@ -19,13 +19,11 @@ import de.onlineferries.view.TravellerView;
 public class ReservationsHandler implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private String selectedReservation;
-	private String[] reservationValues;
-	private ReservationView reservation;
 	private int travellers;
 
 	private List<ReservationView> reservations = new ArrayList<ReservationView>();
 	private ReservationView resView;
+	private int countTravellers;
 
 	@ManagedProperty("#{serviceLocatorBean}")
 	private ServiceLocator serviceLocator;
@@ -62,31 +60,10 @@ public class ReservationsHandler implements Serializable {
 		reservations = rs.getReservationsForCustomer(loginHandler.getCustomer());
 		if (!reservations.isEmpty()) {
 
-			reservationValues = new String[reservations.size()];
-			List<String> help = new ArrayList<String>();
-			for (ReservationView r : reservations) {
-				help.add(r.getReservation_id().toString());
-			}
-
-			reservationValues = help.toArray(reservationValues);
-
 			return "success";
 		}
 
 		return "noRes";
-	}
-
-	public String changeReservation() {
-
-		reservation = reservations.get(Integer.parseInt(selectedReservation) - 1);
-
-		if (reservation != null) {
-			travellers = reservation.getTravellerNames().size();
-
-			return "success";
-		}
-
-		return "NoSuccess";
 	}
 
 	public void changeTraveller(ValueChangeEvent ev) {
@@ -94,13 +71,7 @@ public class ReservationsHandler implements Serializable {
 		ArrayList<TravellerView> help = new ArrayList<TravellerView>(travellers);
 		for (int i = 0; i < travellers; i++)
 			help.add(new TravellerView(i, ""));
-		reservation.setTravellerNames(help);
-		FacesContext.getCurrentInstance().renderResponse();
-	}
-
-	public void changeReservation(ValueChangeEvent ev) {
-		selectedReservation = (String) ev.getNewValue();
-
+//		reservation.setTravellerNames(help);
 		FacesContext.getCurrentInstance().renderResponse();
 	}
 
@@ -115,7 +86,7 @@ public class ReservationsHandler implements Serializable {
 	public void setReservations(List<ReservationView> reservations) {
 		this.reservations = reservations;
 	}
-	
+
 	public ReservationView getResView() {
 		return resView;
 	}
@@ -124,14 +95,32 @@ public class ReservationsHandler implements Serializable {
 		this.resView = resView;
 	}
 
+	public void setCountTravellers(int countTravellers) {
+		this.countTravellers = countTravellers;
+	}
+
+	public int getCountTravellers() {
+		setCountTravellers(resView.getTravellerNames().size());
+		return resView.getTravellerNames().size();
+	}
+
 	public String changeReservation(int res_id) {
 		System.out.println("change reservation with id: " + res_id);
-		for(ReservationView res: reservations) {
+		for (ReservationView res : reservations) {
 			if (res.getReservation_id().equals(res_id)) {
-				resView = new ReservationView(res.getTrip(), res.getCustomer(), res.getShipCabins(), res.getCars(), res.getTravellerNames());
+				resView = new ReservationView(res.getTrip(), res.getCustomer(), res.getShipCabins(), res.getCars(),
+						res.getTravellerNames());
 				return "success";
 			}
-		}		
+		}
 		return "failed";
+	}
+
+	public String update() {
+
+		ReservationService reservationService = serviceLocator.getReservationService();
+		reservationService.updateReservation(resView);
+
+		return "success";
 	}
 }

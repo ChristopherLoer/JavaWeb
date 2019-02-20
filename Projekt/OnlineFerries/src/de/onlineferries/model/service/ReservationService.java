@@ -16,4 +16,6 @@ public interface ReservationService {
 
 	public List<ReservationView> getReservationsForCustomer(CustomerView cust);
 
+	public void updateReservation(ReservationView reservationView);
+
 }

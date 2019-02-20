@@ -169,5 +169,13 @@
 		</navigation-case>
 </navigation-rule>
 
+<navigation-rule>
+	<description>ChangeReservation</description>
+	<from-view-id>/changeReservation.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/reservationList.xhtml</to-view-id>
+		</navigation-case>
+</navigation-rule>
 
 </faces-config>

@@ -65,16 +65,16 @@
 					<h:outputLabel value = ""/><h:outputLabel value = "#{msg.onlineferries_res1_lblPrice}"/><h:outputLabel value = "#{msg.onlineferries_res1_lblCount}"/>
 	
 					<h:outputLabel value = "#{msg.onlineferries_res1_lblCars}"/>
-					<h:outputLabel id = "carPrice" value = "#{reservationsHandler.reservation.trip.carPrice}">
+					<h:outputLabel id = "carPrice" value = "#{reservationsHandler.resView.trip.carPrice}">
 						<f:convertNumber type="currency" currencySymbol = "EUR"/>
 					</h:outputLabel>
 					<h:inputText id="cars" value="#{reservationsHandler.resView.cars}" required ="true" />
 
 					<h:outputLabel value = "#{msg.onlineferries_res1_lblTravellers}"/>	
-					<h:outputLabel id = "passengerPrice" value = "#{reservationsHandler.reservation.trip.passengerPrice}">
+					<h:outputLabel id = "passengerPrice" value = "#{reservationsHandler.resView.trip.passengerPrice}">
 						<f:convertNumber type="currency" currencySymbol = "EUR"/>
 					</h:outputLabel>
-					<h:selectOneListbox id="travellers" value="#{reservationsHandler.resView.travellerNames}" size="1"
+					<h:selectOneListbox id="travellers" value="#{reservationsHandler.countTravellers}" size="1"
 						onchange="this.form.submit()" immediate="true" valueChangeListener = "#{reservationHandler.changeTraveller}">
 						<f:selectItems value="#{reservationHandler.travellerValues}"/>
 					</h:selectOneListbox>						
@@ -86,8 +86,7 @@
 					<h:column>
 						<f:facet name="header">#{msg.onlineferries_res1_lblLastName}</f:facet>
 						<h:inputText value = "#{traveller.name}" id="traveller"
-							required = "true" requiredMessage="#{msg.onlineferries_res1_errorLastName}"
-						 	validator="#{reservationsHandler.validateTravellerName}"/>	
+							required = "true" requiredMessage="#{msg.onlineferries_res1_errorLastName}"/>	
 						 <h:message showDetail="true" for = "traveller"/>
 					</h:column>
 				</h:dataTable>				
@@ -95,8 +94,7 @@
 			</h:panelGrid>
 						
 			<h:panelGrid columns = "1">
-				<h:commandButton action="#{reservationHandler.selectCustomerType}" value="#{msg.onlineferries_changeReservation_form_submit}"/>	
-				<h:commandLink action="#{reservationHandler.back}" value="#{msg.onlineferries_res1_back}" immediate = "true"/>				
+				<h:commandButton action="#{reservationsHandler.update}" value="Reservierung ändern"/>
 			</h:panelGrid>			
 		
 		</h:form>
