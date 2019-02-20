@@ -66,15 +66,16 @@ public class NewCustomerHandler implements Serializable {
 			response = "No name found!";
 		} else {
 			CustomerView cust = serviceLocator.getLoginService().getData(name);
-
-			firstname = cust.getFirstname();
-			city = cust.getCity();
-			street = cust.getStreet();
-			zipcode = cust.getZip();
-			email = cust.getEmail();
-			bank_id = cust.getBank_id();
-			account_nr = cust.getCustomer_id() + "";
-			response = cust.getCustomer_id() + "";
+			if (cust != null) {
+				firstname = cust.getFirstname();
+				city = cust.getCity();
+				street = cust.getStreet();
+				zipcode = cust.getZip();
+				email = cust.getEmail();
+				bank_id = cust.getBank_id();
+				account_nr = cust.getCustomer_id() + "";
+				response = cust.getCustomer_id() + "";
+			}
 		}
 
 		return response;
