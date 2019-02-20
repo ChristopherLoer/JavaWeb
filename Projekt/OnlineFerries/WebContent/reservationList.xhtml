@@ -44,8 +44,10 @@
 		
 		<div class="col-9">
 
-			<h1>Übersicht aller Reservierungen</h1>
-		
+			<h1>ï¿½bersicht aller Reservierungen</h1>
+			
+			<h:form>
+			
 			<h:dataTable value = "#{reservationsHandler.reservations}" var="reservations" border="1">
 				<f:facet name="Header">Reservierungsliste</f:facet>
 				<h:column>
@@ -88,23 +90,13 @@
 						</h:column>
 					</h:dataTable>
 				</h:column>	
-			</h:dataTable>	
-			
+				<h:column>
+					<h:commandButton action="#{reservationsHandler.changeReservation(reservations.reservation_id)}" value="ï¿½ndern"/>
+				</h:column>
+			</h:dataTable>
+			</h:form>
 		</div>
-		
-		<hr/>
-		
-		<h3>Ändern von Reservierungen</h3>
-		<h:panelGrid colums="3">
-		<h:form>
-		<label for="res_nr">Reservierungsnummer: </label>
-		<h:selectOneListbox id="travellers" value="#{reservationsHandler.selectedReservation}" size="1"
-			onchange="this.form.submit()" immediate="true" valueChangeListener = "#{reservationsHandler.changeReservation}">
-			<f:selectItems value="#{reservationsHandler.reservationValues}"/>
-		</h:selectOneListbox>
-		<h:commandButton action="#{reservationsHandler.changeReservation}" value="Ändern"/>
-		</h:form>
-		</h:panelGrid>							
+					
 	</div>
 						
 </f:view>
