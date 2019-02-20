@@ -135,6 +135,19 @@
 </navigation-rule>
 
 <navigation-rule>
+	<description>ChangeReservation</description>
+	<from-view-id>/reservationList.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/changeReservation.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/reservationList.xhtml</to-view-id>
+		</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
 	<description>NewCustomer</description>
 	<from-view-id>/neuerKunde.xhtml</from-view-id>
 		<navigation-case>

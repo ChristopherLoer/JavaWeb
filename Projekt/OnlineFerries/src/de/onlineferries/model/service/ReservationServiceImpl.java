@@ -207,16 +207,12 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public List<ReservationView> getReservationsForCustomer(CustomerView cust) {
 
-		System.out.println("Searching for Reservations");
-
 		EntityManager em = EntityManagerFactoryService.getEntityManagerFactory().createEntityManager();
 		List<ReservationView> res = null;
 
 		TypedQuery<Reservation> reservations = em.createQuery("from de.onlineferries.entity.Reservation",
 				Reservation.class);
 		List<Reservation> r = reservations.getResultList();
-
-		System.out.println("Reservations found");
 
 		res = new ArrayList<ReservationView>();
 		for (Reservation re : r) {
@@ -235,8 +231,6 @@ public class ReservationServiceImpl implements ReservationService {
 			}
 		}
 
-		System.out.println("Returning List of ReservationView");
-		System.out.println(res.get(0));
 		return res;
 	}
 

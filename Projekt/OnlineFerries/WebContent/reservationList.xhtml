@@ -41,10 +41,10 @@
 	    	<f:param value="#{loginHandler.customer.firstname}"/>	    	
 	    </h:outputFormat>
 	</h3>
-
+		
 		<div class="col-9">
 
-			<h1>Übersicht aller Reservierungen</h1>
+			<h1>ï¿½bersicht aller Reservierungen</h1>
 			
 			<h:form>
 			
@@ -75,10 +75,10 @@
 					<f:facet name="header">Kabinen</f:facet>		
 					<h:dataTable value="#{reservations.shipCabins}" var="cabins">		
 						<h:column>
-							<f:facet name="header">Name: </f:facet>#{cabins.cabinDescr}
+							<f:facet name="header">Name</f:facet>#{cabins.cabinDescr}
 						</h:column>					
 						<h:column>
-							<f:facet name="header">Anzahl: </f:facet>#{cabins.count}
+							<f:facet name="header">Anzahl</f:facet>#{cabins.res_count}
 						</h:column>
 					</h:dataTable>
 				</h:column>	
@@ -86,18 +86,17 @@
 					<f:facet name="header">Mitreisende</f:facet>		
 					<h:dataTable value="#{reservations.travellerNames}" var="names">		
 						<h:column>
-							<f:facet name="header">Name: </f:facet>#{names.name}
-						</h:column>					
-		
+							<f:facet name="header">Namen</f:facet>#{names.name}
+						</h:column>
 					</h:dataTable>
 				</h:column>	
 				<h:column>
-					<h:commandButton action="#{reservationsHandler.changeReservation(reservations.reservation_id)}" value="Ändern"/>
+					<h:commandButton action="#{reservationsHandler.changeReservation(reservations.reservation_id)}" value="ï¿½ndern"/>
 				</h:column>
 			</h:dataTable>
 			</h:form>
 		</div>
-									
+					
 	</div>
 						
 </f:view>
